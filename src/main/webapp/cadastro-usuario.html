@@ -2,61 +2,11 @@
 
     <head>
 
+
+        <script src="js/usuario-service.js"></script>
+        <script src="js/usuario-controller.js"></script>
         <script>
-        
-        UsuarioController = function (){
 
-            this.usuarios =[];
-
-            //C REATE
-            this.adicionar = function (usu){  
-                this.usuarios.push(usu);
-            }
-            //R ETRIEVE
-            this.buscarTodos=function (){
-                return this.usuarios;
-            }
-            //U PDATE
-            this.alterar = function (usu){
-                // alteracao no vetor
-            }
-            //D ELETE
-            this.excluir =  function(){
-                //remover no vetor
-            }
-
-           
-            //DOM
-            this.aoClicarListar=function (){
-                usuarios = this.buscarTodos();
-                this.renderizarTabelaUsuarios(usuarios);
-
-            }
-
-            this.renderizarTabelaUsuarios= function (arrUsuarios){
-               
-               dados ="";
-               for (i=0;i<arrUsuarios.length; i++){
-                dados +=  "<tr><td>" + arrUsuarios[i].nome  + " </td><td>" +arrUsuarios[i].senha + " </td></tr>";
-               }
-               
-              document.getElementById("tbUsuarios").innerHTML = dados;
-            }
-
-            //Eventos    
-            this.aoClicarSalvar=function (){
-                //Leitura dos dados
-                nomeUsuario = document.getElementById("txtUsuario").value;
-                senhaUsuario = document.getElementById("txtSenha").value;
-                //Constroi um objeto usuario
-                usu = {nome: nomeUsuario , senha:senhaUsuario };
-                //Adiciona no vetor
-                this.adicionar(usu);
-            }
-
-            
-
-        }
             uc =  new UsuarioController();
 
         </script>
@@ -68,6 +18,7 @@
                 <input id="txtSenha" placeholder="Senha" type="password"/>
                 <input type="button" value="Salvar" onclick="uc.aoClicarSalvar()"/>
                 <input type="button" value="Listar" onclick="uc.aoClicarListar()"/>
+                <input type="button" value="Cancelar" onclick="uc.aoClicarCancelar()"/>
         </form>
 
         <table border="1">
@@ -75,6 +26,8 @@
                 <tr>
                     <th>Nome</th>
                     <th>Senha</th>
+                    <th> - </th>
+                    <th> - </th>
                 </tr>
             </thead>
             <tbody id="tbUsuarios">
