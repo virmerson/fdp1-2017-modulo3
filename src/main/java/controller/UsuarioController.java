@@ -11,69 +11,86 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Usuario;
+import repository.UsuarioRepository;
 
-@WebServlet(urlPatterns={"/usucontroller", "/usuariocontroller"})
+@WebServlet(urlPatterns = { "/usucontroller", "/usuariocontroller" })
 public class UsuarioController extends HttpServlet {
 
-	//GERENCIADOR LISTA
-	private List<Usuario> usuarios = new ArrayList<>();
+	private UsuarioRepository usuRepository = new UsuarioRepository();
 	
-	public void cadastrar(Usuario usuario){
-			usuarios.add(usuario);
-	}
-	
-	
-	public void excluir(Usuario usuario){
-		usuarios.remove(usuario);
-	}
-	
-	
-	public List<Usuario> buscarTodos(){
-		return usuarios;
-	}
-	
-	
-	//Métodos HTTP
 	
 	@Override
+	public void init() throws ServletException {
+		Usuario u1 = new Usuario();
+		u1.setNome("Jao");
+
+		Usuario u2 = new Usuario();
+		u2.setNome("Zé");
+
+		Usuario u3 = new Usuario();
+		u3.setNome("Maria");
+
+		usuRepository.cadastrar(u1);
+		usuRepository.cadastrar(u2);
+		usuRepository.cadastrar(u3);
+
+		super.init();
+	}
+
+	// Métodos HTTP
+
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		//leitura
+
+		// leitura
 		String nome = req.getParameter("nome");
 		String senha = req.getParameter("senha");
-		
-		//instancia do objeto, seta os dados lidos
-		Usuario usuario  = new Usuario();
+
+		// instancia do objeto, seta os dados lidos
+		Usuario usuario = new Usuario();
 		usuario.setNome(nome);
 		usuario.setSenha(senha);
 
-		//Gravar
-		
-		cadastrar(usuario);
-		
-		//Resposta
-		resp.getWriter().println("Requisicao pelo POST: "+ nome + " "+ senha);
+		// Gravar
+
+		usuRepository.cadastrar(usuario);
+
+		// Resposta
+		resp.getWriter().println("Requisicao pelo POST: " + nome + " " + senha);
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		resp.getWriter().println(buscarTodos());
+		resp.getWriter().println("[  {'nome':'jao','senha':'123'},  {'nome':'ze','senha':'345'}, {'nome':'maria','senha':'678'}   ]");
+		resp.getWriter().println(usuRepository.buscarTodos());
 	}
-	
-	
+
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.getWriter().println("Requisicao pelo PUT");
+		
+		int indice = Integer.parseInt(req.getParameter("indice"));
+		
+		String nome =  req.getParameter("nome");
+		String senha =  req.getParameter("senha");
+		
+		Usuario usu = new Usuario();
+		usu.setNome(nome);
+		usu.setSenha(senha);
+		
+		usuRepository.alterar(indice, usu);
+		
 	}
-	
-	
+
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
-		
-		resp.getWriter().println("Requisicao pelo DELETE");
+
+		int indice = Integer.parseInt(req.getParameter("indice"));
+		try {
+			usuRepository.excluir(indice);
+		} catch (Exception e) {
+			throw new ServletException("Não pode excluir!");
+		}
+
 	}
-	
+
 }
