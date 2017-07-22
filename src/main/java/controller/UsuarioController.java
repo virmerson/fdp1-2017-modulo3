@@ -59,10 +59,26 @@ public class UsuarioController extends HttpServlet {
 		resp.getWriter().println("Requisicao pelo POST: " + nome + " " + senha);
 	}
 
+
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.getWriter().println("[  {'nome':'jao','senha':'123'},  {'nome':'ze','senha':'345'}, {'nome':'maria','senha':'678'}   ]");
-		resp.getWriter().println(usuRepository.buscarTodos());
+		List<Usuario> lista = usuRepository.buscarTodos();
+		String json ="[";
+		
+		for (int i=0; i<lista.size(); i++){
+			Usuario usu = lista.get(i);
+			
+			json +="{   \"nome\"   :\"" + usu.getNome() +    "\" ,  \"senha\":\"123\"  }";
+			
+			if (i<lista.size()-1){
+				json+= ",";
+			}	
+		}
+		
+		json +="]";
+		
+		resp.getWriter().println(json);
 	}
 
 	@Override
