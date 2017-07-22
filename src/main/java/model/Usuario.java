@@ -60,6 +60,10 @@ public class Usuario {
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + "]";
+	}
 	
 	
 

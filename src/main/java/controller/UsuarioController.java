@@ -28,6 +28,11 @@ public class UsuarioController extends HttpServlet {
 	}
 	
 	
+	public List<Usuario> buscarTodos(){
+		return usuarios;
+	}
+	
+	
 	//Métodos HTTP
 	
 	@Override
@@ -53,7 +58,7 @@ public class UsuarioController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		resp.getWriter().println("Requisicao pelo GET");
+		resp.getWriter().println(buscarTodos());
 	}
 	
 	
