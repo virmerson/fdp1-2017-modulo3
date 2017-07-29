@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Usuario;
 import repository.UsuarioRepository;
+import repository.UsuarioRepositoryBanco;
+
 
 @WebServlet(urlPatterns = { "/usucontroller", "/usuariocontroller" })
 public class UsuarioController extends HttpServlet {
 
-	private UsuarioRepository usuRepository = new UsuarioRepository();
+	private UsuarioRepository usuRepository = new UsuarioRepositoryBanco();
 	
 	
 	@Override
