@@ -10,6 +10,7 @@ UsuarioController = function () {
         dados = "";
         for (i = 0; i < arrUsuarios.length; i++) {
             dados += "<tr>";
+            dados += "<td>" + arrUsuarios[i].id + "</td>";
             dados += "<td>" + arrUsuarios[i].nome + "</td>";
             dados += "<td>" + arrUsuarios[i].senha + "</td>";
             dados += "<td> <input type='button' value='Excluir' onclick='uc.aoClicarExcluir(" + i + ")'></td>";
@@ -45,10 +46,10 @@ UsuarioController = function () {
     }
 
     this.aoClicarListar = function () {
-    	
+    		var self =  this;
         usuarios = this.usuarioService.buscarTodos(function (usuarios){
         		//window.alert(usuarios)
-        		this.renderizarTabelaUsuarios(usuarios);
+        		self.renderizarTabelaUsuarios(usuarios);
         });
        
 

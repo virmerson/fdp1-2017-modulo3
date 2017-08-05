@@ -70,7 +70,7 @@ public class UsuarioController extends HttpServlet {
 		for (int i=0; i<lista.size(); i++){
 			Usuario usu = lista.get(i);
 			
-			json +="{   \"nome\"   :\"" + usu.getNome() +    "\" ,  \"senha\":\"123\"  }";
+			json +="{\"id\"   :\"" + usu.getId() +    "\" ,    \"nome\"   :\"" + usu.getNome() +    "\" ,  \"senha\":\"123\"  }";
 			
 			if (i<lista.size()-1){
 				json+= ",";
