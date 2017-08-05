@@ -12,4 +12,6 @@ public interface UsuarioRepository {
 	public void excluir(int indice) ;
 	
 	public List<Usuario> buscarTodos() ;
+
+	public void alterar(Usuario usu);
 }

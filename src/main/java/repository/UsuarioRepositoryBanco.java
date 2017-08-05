@@ -30,7 +30,32 @@ public class UsuarioRepositoryBanco implements UsuarioRepository {
 		}
 		
 		public void alterar(int indice, Usuario usuario){
+			
+				//Para vetor
 		}
+		
+		public void alterar(Usuario usuario){
+			
+			PreparedStatement preparadorSQL;
+			try {
+				preparadorSQL = conexao.prepareStatement("update usuario set nome=?, senha=? where id=?");
+				preparadorSQL.setString(1, usuario.getNome());
+				preparadorSQL.setString(2, usuario.getSenha());
+				preparadorSQL.setInt(3, usuario.getId());
+				preparadorSQL.execute();
+				preparadorSQL.close();
+				
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+
+
 
 		public void excluir(int indice) {
 		}

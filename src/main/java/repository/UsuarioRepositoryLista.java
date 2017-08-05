@@ -25,4 +25,10 @@ public class UsuarioRepositoryLista implements UsuarioRepository {
 			return usuarios;
 		}
 
+		@Override
+		public void alterar(Usuario usu) {
+			// TODO Auto-generated method stub
+			
+		}
+
 }

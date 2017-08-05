@@ -85,16 +85,17 @@ public class UsuarioController extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		int indice = Integer.parseInt(req.getParameter("indice"));
+		int id = Integer.parseInt(req.getParameter("id"));
 		
 		String nome =  req.getParameter("nome");
 		String senha =  req.getParameter("senha");
 		
 		Usuario usu = new Usuario();
+		usu.setId(id);
 		usu.setNome(nome);
 		usu.setSenha(senha);
 		
-		usuRepository.alterar(indice, usu);
+		usuRepository.alterar(usu);
 		
 	}
 
