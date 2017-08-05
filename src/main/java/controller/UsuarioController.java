@@ -102,9 +102,9 @@ public class UsuarioController extends HttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		int indice = Integer.parseInt(req.getParameter("indice"));
+		int id = Integer.parseInt(req.getParameter("id"));
 		try {
-			usuRepository.excluir(indice);
+			usuRepository.excluir(id);
 		} catch (Exception e) {
 			throw new ServletException("Não pode excluir!");
 		}

@@ -45,8 +45,12 @@ UsuarioController = function () {
     }
 
     this.aoClicarListar = function () {
-        usuarios = this.usuarioService.buscarTodos();
-        this.renderizarTabelaUsuarios(usuarios);
+    	
+        usuarios = this.usuarioService.buscarTodos(function (usuarios){
+        		//window.alert(usuarios)
+        		this.renderizarTabelaUsuarios(usuarios);
+        });
+       
 
     }
 

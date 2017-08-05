@@ -2,7 +2,9 @@ package repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Usuario;
@@ -57,11 +59,53 @@ public class UsuarioRepositoryBanco implements UsuarioRepository {
 
 
 
-		public void excluir(int indice) {
+		public void excluir(int id) {
+			
+			PreparedStatement preparadorSQL;
+			try {
+				preparadorSQL = conexao.prepareStatement("delete from usuario where id=?");
+				
+				preparadorSQL.setInt(1, id);
+				preparadorSQL.execute();
+				preparadorSQL.close();
+				
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 
 		public List<Usuario> buscarTodos() {
-			return null;
+	
+			List<Usuario> usuarios =  new ArrayList<>();
+			
+			PreparedStatement preparadorSQL;
+			try {
+				preparadorSQL = conexao.prepareStatement("select * from usuario");
+			
+				ResultSet resultSet = preparadorSQL.executeQuery();
+			
+				while (resultSet.next()){
+					
+					Usuario usuario = new Usuario();
+					usuario.setId( resultSet.getInt("id")  );
+					usuario.setNome(resultSet.getString("nome"));
+					usuario.setSenha(resultSet.getString("senha"));
+					
+					usuarios.add(usuario);
+					
+				}
+				
+				preparadorSQL.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return usuarios;
 		}
 
 }
