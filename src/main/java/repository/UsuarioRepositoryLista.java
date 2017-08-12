@@ -11,7 +11,7 @@ public class UsuarioRepositoryLista implements UsuarioRepository {
 
 		public void cadastrar(Usuario usuario) {
 			usuarios.add(usuario);
-		}
+		} 
 		
 		public void alterar(int indice, Usuario usuario){
 			usuarios.set(indice, usuario);

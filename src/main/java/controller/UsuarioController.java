@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.Usuario;
+import repository.RepositoryException;
 import repository.UsuarioRepository;
 import repository.UsuarioRepositoryBanco;
 
@@ -22,20 +23,7 @@ public class UsuarioController extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		Usuario u1 = new Usuario();
-		u1.setNome("Jao");
-
-		Usuario u2 = new Usuario();
-		u2.setNome("Zé");
-
-		Usuario u3 = new Usuario();
-		u3.setNome("Maria");
-
-		usuRepository.cadastrar(u1);
-		usuRepository.cadastrar(u2);
-		usuRepository.cadastrar(u3);
-
-		super.init();
+		
 	}
 
 	// Métodos HTTP
@@ -54,10 +42,14 @@ public class UsuarioController extends HttpServlet {
 
 		// Gravar
 
-		usuRepository.cadastrar(usuario);
+		try {
+			usuRepository.cadastrar(usuario);
+			
+		} catch (RepositoryException e) {
+			throw new ServletException(e);
+		}
 
-		// Resposta
-		resp.getWriter().println("Requisicao pelo POST: " + nome + " " + senha);
+		
 	}
 
 

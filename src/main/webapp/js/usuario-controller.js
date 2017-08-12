@@ -24,16 +24,21 @@ UsuarioController = function () {
 
     //Eventos dos Botoes
     this.aoClicarSalvar = function () {
-
+    		var self =  this;
         //Leitura dos dados
         nomeUsuario = document.getElementById("txtUsuario").value;
         senhaUsuario = document.getElementById("txtSenha").value;
         //Constroi um objeto usuario
-        usu = { nome: nomeUsuario, senha: senhaUsuario };
-
+        //usu = { nome: nomeUsuario, senha: senhaUsuario };
+        usu = "nome="+nomeUsuario+"&senha="+senhaUsuario;
         if (this.modoEdicao == false) {
             //Adiciona no vetor
-            this.usuarioService.adicionar(usu);
+            this.usuarioService.adicionar(usu, function(){
+            		window.alert("Salvo com sucesso!");
+            		self.aoClicarListar();
+            }, function(){
+            		window.alert("Não pode ser salvo!");
+            });
         } else {
             this.usuarioService.alterar(this.indiceEdicao, usu);
         }
@@ -93,3 +98,4 @@ UsuarioController = function () {
     }
 
 }
+

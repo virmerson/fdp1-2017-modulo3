@@ -13,7 +13,7 @@ public class UsuarioRepositoryBanco implements UsuarioRepository {
 	
 		Connection conexao =  ConexaoFactory.criarConexao();
 		
-		public void cadastrar(Usuario usuario) {
+		public void cadastrar(Usuario usuario) throws RepositoryException {
 			
 			try {
 				PreparedStatement preparadorSQL = conexao.prepareStatement("insert into usuario (nome, senha) values (?,?)");
@@ -24,8 +24,7 @@ public class UsuarioRepositoryBanco implements UsuarioRepository {
 				preparadorSQL.close();
 				
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RepositoryException(e);
 			}
 			
 		

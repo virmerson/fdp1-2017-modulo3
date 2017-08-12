@@ -2,23 +2,41 @@ UsuarioService = function () {
     this.usuarios = [];
 
     //C REATE
-    this.adicionar = function (usu) {
-        this.usuarios.push(usu);
+    this.adicionar = function (usu, sucesso, erro) {
+    	
+      	var xhttp = new XMLHttpRequest();
+    		xhttp.onreadystatechange = function() {
+     	   
+	    			if ( this.readyState == 4 && this.status == 200) {
+		     	   
+		    	    		 sucesso();
+		    	    		 
+	    			}
+     	   
+     	  };
+     	 xhttp.open("POST", "usucontroller", true);
+     	 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     	 xhttp.onerror= erro;
+     	 xhttp.send(usu);
+     
+     	 	
     }
+    
+    
     //R ETRIEVE
     this.buscarTodos = function (cb) {
   
     	
-    	var xhttp = new XMLHttpRequest();
-    	  xhttp.onreadystatechange = function() {
-    	    if (this.readyState == 4 && this.status == 200) {
-    	    		cb ( JSON.parse(this.responseText) );
-    	    		 
-    	    }
-    	  };
-    	  xhttp.open("GET", "usucontroller", true);
-    	  xhttp.send();	
-    	
+		    	var xhttp = new XMLHttpRequest();
+		    	  xhttp.onreadystatechange = function() {
+		    	    if (this.readyState == 4 && this.status == 200) {
+		    	    		cb ( JSON.parse(this.responseText) );
+		    	    		 
+		    	    }
+		    	  };
+		    	  xhttp.open("GET", "usucontroller", true);
+		    	  xhttp.send();	
+		    	
     }
     //U PDATE
     this.alterar = function (indice, usu) {
