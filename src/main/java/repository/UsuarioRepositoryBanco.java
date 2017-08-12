@@ -107,4 +107,36 @@ public class UsuarioRepositoryBanco implements UsuarioRepository {
 			return usuarios;
 		}
 
+		@Override
+		public Usuario burcarPorId(Integer id) {
+			Usuario usuario=null ;
+			
+			PreparedStatement preparadorSQL;
+			try {
+				preparadorSQL = conexao.prepareStatement("select * from usuario where id =?");
+				preparadorSQL.setInt(1, id);
+				
+				ResultSet resultSet = preparadorSQL.executeQuery();
+			
+				if (resultSet.next()){
+					
+					usuario = new Usuario();
+					usuario.setId( resultSet.getInt("id")  );
+					usuario.setNome(resultSet.getString("nome"));
+					usuario.setSenha(resultSet.getString("senha"));
+					
+					
+					
+				}
+				
+				preparadorSQL.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return usuario;
+		}
+
 }

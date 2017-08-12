@@ -13,8 +13,8 @@ UsuarioController = function () {
             dados += "<td>" + arrUsuarios[i].id + "</td>";
             dados += "<td>" + arrUsuarios[i].nome + "</td>";
             dados += "<td>" + arrUsuarios[i].senha + "</td>";
-            dados += "<td> <input type='button' value='Excluir' onclick='uc.aoClicarExcluir(" + i + ")'></td>";
-            dados += "<td> <input type='button' value='Editar' onclick='uc.aoClicarEditar(" + i + ")'></td>";
+            dados += "<td> <input type='button' value='Excluir' onclick='uc.aoClicarExcluir(" + arrUsuarios[i].id + ")'></td>";
+            dados += "<td> <input type='button' value='Editar' onclick='uc.aoClicarEditar(" +arrUsuarios[i].id + ")'></td>";
 
             dados += "</tr>";
         }
@@ -65,13 +65,17 @@ UsuarioController = function () {
 
     }
 
-    this.aoClicarEditar = function (indice) {
+    this.aoClicarEditar = function (id) {
         this.entrarModoEdicao();
-        this.indiceEdicao = indice;
+        this.indiceEdicao = id;
 
-        usuario = this.usuarioService.buscarPorIndice(indice);
-        document.getElementById("txtUsuario").value = usuario.nome;
-        document.getElementById("txtSenha").value = usuario.senha;
+         this.usuarioService.buscarPorId(id, function (usuario){
+        	 		document.getElementById("txtId").value = usuario.id;
+        	   		document.getElementById("txtUsuario").value = usuario.nome;
+        	   		document.getElementById("txtSenha").value = usuario.senha;
+        	
+        });
+     
     }
 
     this.aoClicarCancelar = function () {

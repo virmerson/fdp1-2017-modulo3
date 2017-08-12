@@ -6,17 +6,19 @@ UsuarioService = function () {
     	
       	var xhttp = new XMLHttpRequest();
     		xhttp.onreadystatechange = function() {
-     	   
-	    			if ( this.readyState == 4 && this.status == 200) {
-		     	   
-		    	    		 sucesso();
-		    	    		 
-	    			}
-     	   
-     	  };
+     	  
+     	   	if (this.readyState == 4){ 
+     	   		if ( this.status == 200) {
+     	   		 sucesso();
+     	   		}else{
+     	   			erro();
+     	   		}
+     	   		
+     	   	}
+     	  
+    		};
      	 xhttp.open("POST", "usucontroller", true);
      	 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-     	 xhttp.onerror= erro;
      	 xhttp.send(usu);
      
      	 	
@@ -50,7 +52,15 @@ UsuarioService = function () {
         this.usuarios.splice(indice, 1);
     }
 
-    this.buscarPorIndice = function (indice) {
-        return this.usuarios[indice];
+    this.buscarPorId= function (id, cb) {
+     	var xhttp = new XMLHttpRequest();
+	  	  xhttp.onreadystatechange = function() {
+	  	    if (this.readyState == 4 && this.status == 200) {
+	  	    		cb ( JSON.parse(this.responseText) );
+	  	    		 
+	  	    }
+	  	  };
+	  	  xhttp.open("GET", "usucontroller?id="+id, true);
+	  	  xhttp.send();	
     }
 }

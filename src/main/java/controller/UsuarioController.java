@@ -14,16 +14,14 @@ import repository.RepositoryException;
 import repository.UsuarioRepository;
 import repository.UsuarioRepositoryBanco;
 
-
 @WebServlet(urlPatterns = { "/usucontroller", "/usuariocontroller" })
 public class UsuarioController extends HttpServlet {
 
 	private UsuarioRepository usuRepository = new UsuarioRepositoryBanco();
-	
-	
+
 	@Override
 	public void init() throws ServletException {
-		
+
 	}
 
 	// Métodos HTTP
@@ -44,51 +42,66 @@ public class UsuarioController extends HttpServlet {
 
 		try {
 			usuRepository.cadastrar(usuario);
-			
+
 		} catch (RepositoryException e) {
 			throw new ServletException(e);
 		}
 
-		
 	}
 
-
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Usuario> lista = usuRepository.buscarTodos();
-		String json ="[";
-		
-		for (int i=0; i<lista.size(); i++){
-			Usuario usu = lista.get(i);
+
+		if (req.getParameter("id") != null) {
+			Integer id = Integer.parseInt(req.getParameter("id"));
+			Usuario usu = usuRepository.burcarPorId(id);
 			
-			json +="{\"id\"   :\"" + usu.getId() +    "\" ,    \"nome\"   :\"" + usu.getNome() +    "\" ,  \"senha\":\"123\"  }";
+			String json = "";
 			
-			if (i<lista.size()-1){
-				json+= ",";
-			}	
+			json += "{\"id\"   :\"" + usu.getId() + "\" ,    \"nome\"   :\"" + usu.getNome()
+					+ "\" ,  \"senha\":\""+ usu.getSenha()+ "\"  }";
+			json += "";
+
+			resp.getWriter().println(json);
+			
+
+		} else {
+
+			List<Usuario> lista = usuRepository.buscarTodos();
+			String json = "[";
+
+			for (int i = 0; i < lista.size(); i++) {
+				Usuario usu = lista.get(i);
+
+				json += "{\"id\"   :\"" + usu.getId() + "\" ,    \"nome\"   :\"" + usu.getNome()
+						+ "\" ,  \"senha\":\""+ usu.getSenha()+ "\"  }";
+
+				if (i < lista.size() - 1) {
+					json += ",";
+				}
+			}
+
+			json += "]";
+
+			resp.getWriter().println(json);
 		}
-		
-		json +="]";
-		
-		resp.getWriter().println(json);
 	}
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+
 		int id = Integer.parseInt(req.getParameter("id"));
-		
-		String nome =  req.getParameter("nome");
-		String senha =  req.getParameter("senha");
-		
+
+		String nome = req.getParameter("nome");
+		String senha = req.getParameter("senha");
+
 		Usuario usu = new Usuario();
 		usu.setId(id);
 		usu.setNome(nome);
 		usu.setSenha(senha);
-		
+
 		usuRepository.alterar(usu);
-		
+
 	}
 
 	@Override

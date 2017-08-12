@@ -14,4 +14,6 @@ public interface UsuarioRepository {
 	public List<Usuario> buscarTodos() ;
 
 	public void alterar(Usuario usu);
+
+	public Usuario burcarPorId(Integer id);
 }

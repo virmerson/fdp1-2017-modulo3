@@ -31,4 +31,10 @@ public class UsuarioRepositoryLista implements UsuarioRepository {
 			
 		}
 
+		@Override
+		public Usuario burcarPorId(Integer id) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 }
