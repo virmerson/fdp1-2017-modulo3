@@ -41,9 +41,27 @@ UsuarioService = function () {
 		    	
     }
     //U PDATE
-    this.alterar = function (indice, usu) {
+    this.alterar = function (usu, sucesso, erro) {
         // alteracao no vetor
-        this.usuarios.splice(indice, 1, usu);
+        //this.usuarios.splice(indice, 1, usu);
+    	
+    	var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+ 	  
+ 	   	if (this.readyState == 4){ 
+ 	   		if ( this.status == 200) {
+ 	   		 sucesso();
+ 	   		}else{
+ 	   			erro();
+ 	   		}
+ 	   		
+ 	   	}
+ 	  
+		};
+	 	 xhttp.open("PUT", "usucontroller?"+usu, true);
+	 	 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	 	 xhttp.send();
+ 
 
     }
     //D ELETE

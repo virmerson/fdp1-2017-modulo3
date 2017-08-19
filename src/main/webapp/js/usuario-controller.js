@@ -26,12 +26,13 @@ UsuarioController = function () {
     this.aoClicarSalvar = function () {
     		var self =  this;
         //Leitura dos dados
+    		idUsuario = document.getElementById("txtId").value;
         nomeUsuario = document.getElementById("txtUsuario").value;
         senhaUsuario = document.getElementById("txtSenha").value;
         //Constroi um objeto usuario
         //usu = { nome: nomeUsuario, senha: senhaUsuario };
         usu = "nome="+nomeUsuario+"&senha="+senhaUsuario;
-        if (this.modoEdicao == false) {
+        if (idUsuario=="") {
             //Adiciona no vetor
             this.usuarioService.adicionar(usu, function(){
             		window.alert("Salvo com sucesso!");
@@ -40,7 +41,13 @@ UsuarioController = function () {
             		window.alert("Não pode ser salvo!");
             });
         } else {
-            this.usuarioService.alterar(this.indiceEdicao, usu);
+        		usu+="&id="+idUsuario;
+            this.usuarioService.alterar(usu, function (){
+	            	window.alert("Salvo com sucesso!");
+	        		self.aoClicarListar();
+            } , function(){
+            		window.alert("Não pode ser salvo!");
+            });
         }
 
 
