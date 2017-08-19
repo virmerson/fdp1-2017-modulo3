@@ -60,8 +60,18 @@ UsuarioController = function () {
 
     }
 
-    this.aoClicarExcluir = function (indice) {
-        this.usuarioService.excluir(indice);
+    this.aoClicarExcluir = function (id) {
+    	
+    		if (window.confirm("Deseja realmente excluir?")){
+	    	
+	    		var self =  this;
+	        this.usuarioService.excluir(id, function (){
+	        		
+	        		self.aoClicarListar();
+	        		window.alert("Excluído com sucesso!");
+	        		
+	        });
+    		}
 
     }
 

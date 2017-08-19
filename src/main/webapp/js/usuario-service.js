@@ -47,9 +47,20 @@ UsuarioService = function () {
 
     }
     //D ELETE
-    this.excluir = function (indice) {
+    this.excluir = function (id, cb) {
         //remover no vetor
-        this.usuarios.splice(indice, 1);
+        
+    		var xhttp = new XMLHttpRequest();
+	  	  xhttp.onreadystatechange = function() {
+	  	    if (this.readyState == 4 && this.status == 200) {
+	  	    		cb();
+	  	    		 
+	  	    }
+	  	  };
+	  	  xhttp.open("DELETE", "usucontroller?id="+id, true);
+	  	  xhttp.send();
+    	
+    		//this.usuarios.splice(indice, 1);
     }
 
     this.buscarPorId= function (id, cb) {
